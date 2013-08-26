@@ -4,8 +4,8 @@ class ErlangInstalled < Requirement
   fatal true
 
   satisfy {
-    which 'erl' and begin
-      `erl -noshell -eval 'io:fwrite("~s~n", [erlang:system_info(otp_release)]).' -s erlang halt | grep -q '^R1[6789]'`
+    erl = which('erl') and begin
+      `#{erl} -noshell -eval 'io:fwrite("~s~n", [erlang:system_info(otp_release)]).' -s erlang halt | grep -q '^R1[6789]'`
       $?.exitstatus == 0
     end
   }
@@ -26,8 +26,8 @@ end
 
 class Elixir < Formula
   homepage 'http://elixir-lang.org/'
-  url  'https://github.com/elixir-lang/elixir/archive/v0.10.0.tar.gz'
-  sha1 '185347cdebd5cbd95bd346c32ed9666bf722d05a'
+  url  'https://github.com/elixir-lang/elixir/archive/v0.10.1.tar.gz'
+  sha1 '18e0312b28e9e429995bc2de06bfd0f7d1e4348f'
 
   head 'https://github.com/elixir-lang/elixir.git'
 

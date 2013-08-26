@@ -81,13 +81,16 @@ class PerconaServer < Formula
     args << "-DWITH_READLINE=yes" unless build.include? 'with-libedit'
 
     # Make universal for binding to universal applications
-    args << "-DCMAKE_OSX_ARCHITECTURES='i386;x86_64'" if build.universal?
+    args << "-DCMAKE_OSX_ARCHITECTURES='#{Hardware::CPU.universal_archs.as_cmake_arch_flags}'" if build.universal?
 
     # Build with local infile loading support
     args << "-DENABLED_LOCAL_INFILE=1" if build.include? 'enable-local-infile'
 
     system "cmake", *args
     system "make"
+    # Reported upstream:
+    # http://bugs.mysql.com/bug.php?id=69645
+    inreplace "scripts/mysql_config", / +-Wno[\w-]+/, ""
     system "make install"
 
     # Don't create databases inside of the prefix!

@@ -29,14 +29,15 @@ class NpmNotInstalled < Requirement
   end
 end
 
+# Note that x.even are stable releases, x.odd are devel releases
 class Node < Formula
   homepage 'http://nodejs.org/'
-  url 'http://nodejs.org/dist/v0.10.13/node-v0.10.13.tar.gz'
-  sha1 'f73d5f134296ed0aa16cbec5d727f94587844155'
+  url 'http://nodejs.org/dist/v0.10.17/node-v0.10.17.tar.gz'
+  sha1 'c9d31d5415d2cf7a09fd7abebf9f01259e9dd93b'
 
   devel do
-    url 'http://nodejs.org/dist/v0.11.4/node-v0.11.4.tar.gz'
-    sha1 '0035d18e2dcf9aad669b1c7c07319e17abfe3762'
+    url 'http://nodejs.org/dist/v0.11.6/node-v0.11.6.tar.gz'
+    sha1 '4f3a643b4913ef085175aef180c3bfd9259a4357'
   end
 
   head 'https://github.com/joyent/node.git'
@@ -65,9 +66,6 @@ class Node < Formula
 
     unless build.include? 'without-npm'
       (lib/"node_modules/npm/npmrc").write("prefix = #{npm_prefix}\n")
-      # we need to force make this directory, or node modules installed here
-      # by npm will end up in the node keg and won't survive upgrades
-      mkdir_p "#{HOMEBREW_PREFIX}/lib/node_modules"
     end
   end
 
